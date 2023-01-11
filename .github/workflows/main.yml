@@ -27,7 +27,7 @@ jobs:
             sudo dpkg --configure -a
             sudo apt-get -y install newrelic-php5
             sudo NR_INSTALL_SILENT=1 newrelic-install install
-            sed -i -e "s/REPLACE_WITH_REAL_KEY/7525edc26a0ea60fde66c1a38ceed0a5ed5eNRAL/" \
+            sudo sed -i -e "s/REPLACE_WITH_REAL_KEY/7525edc26a0ea60fde66c1a38ceed0a5ed5eNRAL/" \
               -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"Aplicacion de PHP\"/" \
               $(php -r "echo(PHP_CONFIG_FILE_SCAN_DIR);")/newrelic.ini
           host: ${{ secrets.HOST }}
