@@ -21,18 +21,8 @@ jobs:
         with:
           command: |
             sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-4QW1BYKLW7KJFQ3R1OKT33PQQW3 NEW_RELIC_ACCOUNT_ID=3662932 /usr/local/bin/newrelic install -n php-agent-installer
-            sudo echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
-            sudo wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
-            sudo apt-get update
-            sudo apt-get -y install newrelic-php5
-            sudo NR_INSTALL_SILENT=1 newrelic-install install
-            sed -i -e "s/REPLACE_WITH_REAL_KEY/7525edc26a0ea60fde66c1a38ceed0a5ed5eNRAL/" \
-              -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"newrelic_dev\"/" \
-              $(php -r "echo(PHP_CONFIG_FILE_SCAN_DIR);")/newrelic.ini
-            sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-4QW1BYKLW7KJFQ3R1OKT33PQQW3 NEW_RELIC_ACCOUNT_ID=3662932 /usr/local/bin/newrelic install -n logs-integration
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER}}
           key: ${{ secrets.PRIVATE_KEY}}
 
-          
           
