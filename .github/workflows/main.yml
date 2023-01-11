@@ -1,0 +1,35 @@
+name: DevSecOps Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  Deploy_EC2:
+    name: Deploy EC2
+    runs-on: ubuntu-latest
+    steps:
+      - name: New Relic agent
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
+            wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
+            sudo apt-get update
+            sudo apt-get -y install newrelic-php5
+            sudo NR_INSTALL_SILENT=1 newrelic-install install
+            sed -i -e "s/REPLACE_WITH_REAL_KEY/7525edc26a0ea60fde66c1a38ceed0a5ed5eNRAL/" \
+            -e "s/newrelic.appname[[:space:]]=[[:space:]].*/newrelic.appname=\"${{ secrets.APPLICATION_NAME }}\"/" \
+            $(php -r "echo(PHP_CONFIG_FILE_SCAN_DIR);")/newrelic.ini
+            curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=${{ secrets.API_KEY }} NEW_RELIC_ACCOUNT_ID=${{ secrets.ACCOUNT_ID }} /usr/local/bin/newrelic install -n logs-integration
+            shutdown -r now
+          host: ${{ secrets.HOST }}
+          user: ${{ secrets.USER}}
+          key: ${{ secrets.PRIVATE_KEY}}
