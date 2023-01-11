@@ -20,7 +20,7 @@ jobs:
         uses: fifsky/ssh-action@master
         with:
           command: |
-            sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-4QW1BYKLW7KJFQ3R1OKT33PQQW3 NEW_RELIC_ACCOUNT_ID=3662932 /usr/local/bin/newrelic install
+            sudo curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-4QW1BYKLW7KJFQ3R1OKT33PQQW3 NEW_RELIC_ACCOUNT_ID=3662932 /usr/local/bin/newrelic install -y
           host: ${{ secrets.HOST }}
           user: ${{ secrets.USER}}
           key: ${{ secrets.PRIVATE_KEY}}
