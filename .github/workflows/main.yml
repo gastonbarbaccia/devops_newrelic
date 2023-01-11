@@ -23,8 +23,6 @@ jobs:
             echo 'deb http://apt.newrelic.com/debian/ newrelic non-free' | sudo tee /etc/apt/sources.list.d/newrelic.list
             wget -O- https://download.newrelic.com/548C16BF.gpg | sudo apt-key add -
             sudo apt-get update
-            sudo kill 14531
-            sudo dpkg --configure -a
             sudo apt-get -y install newrelic-php5
             sudo NR_INSTALL_SILENT=1 newrelic-install install
             sudo sed -i -e "s/REPLACE_WITH_REAL_KEY/7525edc26a0ea60fde66c1a38ceed0a5ed5eNRAL/" \
